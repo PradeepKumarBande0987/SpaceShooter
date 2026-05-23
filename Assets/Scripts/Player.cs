@@ -31,13 +31,9 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
 
     [SerializeField]
-    private bool _isTripleShotActive = false;
+    private bool _isTripleShotActive = false; 
 
-    [SerializeField]
-    private bool _isSpeedBoostActive = false;
-
-    [SerializeField]
-    private GameObject _speedBoostPrefab;
+    
 
     [System.Obsolete]
     void Start()
@@ -71,10 +67,6 @@ public class Player : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-
-        if (_isSpeedBoostActive) {
-            _speed = 8f;
-        }
         
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(movement  * _speed * Time.deltaTime);
@@ -102,13 +94,13 @@ public class Player : MonoBehaviour
     }
 
     public void ActivateSpeedBoost() {
-        _isSpeedBoostActive = true;
+        _speed = 8f;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
 
     private IEnumerator SpeedBoostPowerDownRoutine() {
         yield return new WaitForSeconds(5f);
-        _isSpeedBoostActive = false;
+        _speed = 5f;
     }
 
     internal void ActivateTripleShot()
