@@ -11,7 +11,7 @@ public class PowerUp : MonoBehaviour
     private float _verticalBoundary = 6.25f;
     
     [SerializeField]
-    private float _delayBeforeRespawn = 5f;
+    private float _delayBeforeRespawn = 15f;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,17 +32,19 @@ public class PowerUp : MonoBehaviour
 
             if (player != null) {
 
-                if (gameObject.CompareTag("PowerUp")) {
-                    Debug.Log("Player picked up Triple Shot Power-Up!");
-                    player.ActivateTripleShot();
+                switch (gameObject.tag) {
+                    case "PowerUp":
+                        Debug.Log("Player picked up Triple Shot Power-Up!");
+                        player.ActivateTripleShot();
+                        break;
+                    case "SpeedBoost":
+                        Debug.Log("Player picked up Speed Boost Power-Up!");
+                        player.ActivateSpeedBoost();
+                        break;
+                    default:
+                        Debug.LogWarning("Unknown power-up type: " + gameObject.tag);
+                        break;
                 }
-                else if (gameObject.CompareTag("SpeedBoost")) {
-                    Debug.Log("Player picked up Speed Boost Power-Up!");
-                    player.ActivateSpeedBoost();
-                }
-
-                player.StartCoroutine(RespawnPowerUp());
-                return;
             }
 
             StartCoroutine(RespawnPowerUp());
