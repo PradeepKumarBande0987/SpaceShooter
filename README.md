@@ -1,6 +1,6 @@
 # Space Shooter
 
-Welcome to **Space Shooter**, a Unity 2D arcade-style shooter project created while learning from the Udemy course:
+Welcome to **Space Shooter**, a Unity 2D arcade-style shooter project created while learning from the **Udemy** course:
 
 https://www.udemy.com/share/101XAE3@8saDdqmNAvWvHNae7RGPz719ck22-KffyblTNdX6GAIbIzTAZwCUp6I0chAH22rZEQ==/
 
