@@ -1,11 +1,11 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class Enemy : MonoBehaviour
+public class Asteroid : MonoBehaviour
 {
     private float _horizontalBoundary = 11.3f;
     private float _verticalBoundary = 6.25f;
     private float _spawnRate = 4f;
+    private float _rotateAsteroid = 4f;
 
     private Player _player;
 
@@ -16,12 +16,12 @@ public class Enemy : MonoBehaviour
 
     private AudioSource _audioSource;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [System.Obsolete]
     void Start()
     {
         _player = FindObjectOfType<Player>();
         _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
 
         if(_player == null)
         {
@@ -42,47 +42,43 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     void Update()
     {
-        MoveEnemy();
+        MoveAsteroidDown();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Enemy collided with: " + other.name);
+        Debug.Log("Asteroid collided with: " + collision.name);
 
-
-        if (other.CompareTag("Player"))
+        if(collision.CompareTag("Player"))
         {
-            Debug.Log("Enemy collided with Player. Destroying both.");
-
             if (_player != null)
             {
                 _player.Damage();
             }
-
             _audioSource.Play();
-            _animator.SetTrigger("OnEnemyExplode");
+            _animator.SetTrigger("OnAsteroidDeath");
             _spawnRate = 0f;
+            _rotateAsteroid = 0f;
             Destroy(this.gameObject, 2.5f);
-        }
-        else if (other.CompareTag("Laser"))
+        } else if (collision.CompareTag("Laser"))
         {
-            if (_player != null)
-            {
-                _player.updatePlayerScore(1);
-            }
             _audioSource.Play();
-            _animator.SetTrigger("OnEnemyExplode");
+            _animator.SetTrigger("OnAsteroidDeath");
             _spawnRate = 0f;
-            Destroy(other.gameObject);
+            _rotateAsteroid = 0f;
+            Destroy(collision.gameObject);
             Destroy(this.gameObject, 2.5f);
         }
+
     }
 
-    void MoveEnemy()
+    void MoveAsteroidDown()
     {
         transform.Translate(Vector3.down * _spawnRate * Time.deltaTime);
+        transform.Rotate(Vector3.forward * _rotateAsteroid * Time.deltaTime);
 
         if (transform.position.y < -_verticalBoundary)
         {

@@ -13,6 +13,8 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     private float _delayBeforeRespawn = 15f;
 
+    [SerializeField]
+    private AudioClip _audioClip;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,7 +31,7 @@ public class PowerUp : MonoBehaviour
     {
         if (collision.CompareTag("Player")) {
             Player player = collision.GetComponent<Player>();
-
+            AudioSource.PlayClipAtPoint(_audioClip, transform.position);
             if (player != null) {
 
                 switch (gameObject.tag) {
@@ -41,10 +43,16 @@ public class PowerUp : MonoBehaviour
                         Debug.Log("Player picked up Speed Boost Power-Up!");
                         player.ActivateSpeedBoost();
                         break;
+                    case "Shield":
+                        Debug.Log("Shield power up is active");
+                        player.activateShield();
+                        break;
                     default:
                         Debug.LogWarning("Unknown power-up type: " + gameObject.tag);
                         break;
                 }
+
+                Destroy(this.gameObject);
             }
 
             StartCoroutine(RespawnPowerUp());

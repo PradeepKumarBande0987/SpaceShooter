@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6608551628436479901}
   m_Layer: 0
   m_Name: Shield_Power_Up
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PowerUp
   _speed: 3
   _delayBeforeRespawn: 15
+  _audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
 --- !u!61 &4360846659166608996
 BoxCollider2D:
   m_ObjectHideFlags: 0

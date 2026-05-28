@@ -28,6 +28,7 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator SpawnPowerUp() 
     {
+        yield return new WaitForSeconds(3.0f);
         while (_stopSpawning == false) {
 
             Vector3 spawnPosition = new Vector3(Random.Range(-_horizontalBoundary, _horizontalBoundary), _verticalBoundary, 0);
@@ -38,6 +39,7 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator SpawnEnemy()
     {
+        yield return new WaitForSeconds(3.0f);
         while (_stopSpawning == false) {
             Vector3 spawnPosition = new Vector3(Random.Range(-_horizontalBoundary, _horizontalBoundary), _verticalBoundary, 0);
             GameObject enemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
