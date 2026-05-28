@@ -179,3 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160e6b97e8083478b811ea82369a5880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Laser
+  _isEnemyLaser: 0
+  _speed: 8
+  _enemyLaserSpeed: 10

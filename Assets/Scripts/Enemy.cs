@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -15,6 +16,16 @@ public class Enemy : MonoBehaviour
     private AudioClip _expolseAudioClip;
 
     private AudioSource _audioSource;
+
+    [SerializeField]
+    private GameObject _laserPrefab;
+
+    [SerializeField]
+    private float _fireDelay = 2f;
+
+    [SerializeField]
+    private float _fireRate = 0.5f;
+    private float _canFire = -1f;
 
     [System.Obsolete]
     void Start()
@@ -45,17 +56,13 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         MoveEnemy();
+        MoveLaserDown();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Enemy collided with: " + other.name);
-
-
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Enemy collided with Player. Destroying both.");
-
             if (_player != null)
             {
                 _player.Damage();
@@ -64,9 +71,10 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             _animator.SetTrigger("OnEnemyExplode");
             _spawnRate = 0f;
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.5f);
         }
-        else if (other.CompareTag("Laser"))
+        if (other.CompareTag("Laser"))
         {
             if (_player != null)
             {
@@ -76,7 +84,25 @@ public class Enemy : MonoBehaviour
             _animator.SetTrigger("OnEnemyExplode");
             _spawnRate = 0f;
             Destroy(other.gameObject);
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.5f);
+        }
+    }
+
+    void MoveLaserDown()
+    {
+        if(Time.time > _canFire)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position + Vector3.down * 0.5f, Quaternion.identity);
+
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            for (int i = 0; i< lasers.Length; i++)
+            {
+                lasers[i].ActiveEnemyLaser();
+            }
         }
     }
 

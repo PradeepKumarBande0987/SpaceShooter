@@ -50,20 +50,23 @@ public class Asteroid : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Asteroid collided with: " + collision.name);
+        Debug.Log("Asteroid collided with name: " + collision.name);
+        Debug.Log("Asteroid collided with tag: " + collision.tag);
 
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             if (_player != null)
             {
                 _player.Damage();
             }
+
             _audioSource.Play();
             _animator.SetTrigger("OnAsteroidDeath");
             _spawnRate = 0f;
             _rotateAsteroid = 0f;
             Destroy(this.gameObject, 2.5f);
-        } else if (collision.CompareTag("Laser"))
+        }
+        else if (collision.CompareTag("Laser"))
         {
             _audioSource.Play();
             _animator.SetTrigger("OnAsteroidDeath");
@@ -72,7 +75,6 @@ public class Asteroid : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(this.gameObject, 2.5f);
         }
-
     }
 
     void MoveAsteroidDown()
