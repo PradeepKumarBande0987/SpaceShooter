@@ -76,7 +76,7 @@ Enemies spawn from the top and move downward. If an enemy collides with the play
 
 ### Power-up
 
-![Power-up](README_images/powerup.png)
+![Power-up](README_images/powerup.png)![Power-up](README_images/powerup.png)![Power-up](README_images/powerup.png)
 
 Power-ups appear randomly and grant bonuses like triple shot or speed boost for a short time.
 
